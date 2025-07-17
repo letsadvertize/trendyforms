@@ -54,12 +54,14 @@ export const appTheme = {
 
   // Form header styling
   formHeader: {
-    base: "text-white rounded-t-lg",
+    base: "text-white py-6 shadow-lg",
+    background: "bg-gradient-to-r from-slate-700 to-slate-800",
     content: "flex justify-between items-center",
     logoSection: "flex items-center space-x-4",
-    logo: "h-10 w-auto brightness-0 invert",
-    title: "text-xl font-bold",
-    subtitle: "text-sm",
+    logo: "h-12 w-auto brightness-0 invert",
+    title: "text-xl font-bold text-white",
+    subtitle: "text-sm text-slate-100",
+    contact: "text-sm text-slate-200",
     buttonGroup: "flex gap-2",
     actionButton: "bg-white/20 hover:bg-white/30 text-white border-white/30"
   },
