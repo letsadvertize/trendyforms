@@ -1,6 +1,6 @@
-# Medical Forms App
+# TrendyForms - Medical Forms App
 
-A Next.js application for managing medical forms.
+A Next.js application for managing medical forms with a modern, trendy interface.
 
 ## Getting Started
 
@@ -25,3 +25,8 @@ This app is configured for static export and can be deployed to Vercel or any st
 ```bash
 npm run build
 ```
+```
+=======
+# trendyforms
+trendy communications medical form
+>>>>>>> 9b8c05a6a67e2ae1751d65be732fcfcf39e11efb
