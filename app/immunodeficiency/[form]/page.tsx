@@ -63,3 +63,13 @@ export default async function ImunodeficiencyFormPage({ params }: PageProps) {
     </div>
   )
 }
+
+export async function generateStaticParams() {
+  // Define all possible form routes that should be pre-generated
+  return [
+    { form: 'letter-of-medical-necessity' },
+    { form: 'provider-visit-attestation' },
+    { form: 'medication-reconciliation' },
+    { form: 'progress-note' },
+  ]
+}
