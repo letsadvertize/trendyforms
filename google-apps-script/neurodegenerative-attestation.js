@@ -21,6 +21,25 @@ function doPost(e) {
 
     console.log("Processed form data:", JSON.stringify(formData, null, 2))
 
+    // Validate required fields
+    const requiredFields = [
+      "providerName", "providerAddress", "npiNumber", "phoneNumber", "faxNumber",
+      "patientName", "patientAddress", "patientDOB",
+      "dateOfConsult", "icdCodes", "dateOfService",
+      "providerSignature", "providerNameSignature", "signatureDate"
+    ]
+    const missingFields = requiredFields.filter(f => !formData[f] || formData[f].toString().trim() === "")
+    if (missingFields.length > 0) {
+      console.error("Missing required fields:", missingFields)
+      return ContentService
+        .createTextOutput(JSON.stringify({
+          success: false,
+          error: "Missing required fields: " + missingFields.join(", "),
+          message: "Please fill out all required fields."
+        }))
+        .setMimeType(ContentService.MimeType.JSON)
+    }
+
     // Create a Google Doc with the form content
     const docName = `Provider_Visit_Attestation_Neurodegenerative_${formData.patientName || 'Unknown'}_${new Date().toISOString().split('T')[0]}`
     const doc = DocumentApp.create(docName)

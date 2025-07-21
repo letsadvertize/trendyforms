@@ -65,12 +65,19 @@ export function ProviderVisitAttestationNeurodegenerative() {
   })
 
   const handleInputChange = (field: keyof FormData, value: string) => {
-    setFormData((prev) => ({ ...prev, [field]: value }))
+    setFormData((prev) => {
+      const updated = { ...prev, [field]: value }
+      console.log("Updated form data:", updated)
+      return updated
+    })
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsSubmitting(true)
+
+    // Debug: Log form data before submission
+    console.log("Form data being submitted:", formData)
 
     try {
       const response = await fetch("/api/forms/submit", {

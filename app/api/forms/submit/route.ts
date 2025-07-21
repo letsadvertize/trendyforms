@@ -25,8 +25,10 @@ export async function POST(request: NextRequest) {
     // Attestation Forms
     else if (formType === "provider-visit-attestation-immunodeficiency") {
       googleAppsScriptUrl = process.env.GOOGLE_APPS_SCRIPT_IMMUNODEFICIENCY_ATTESTATION
+      console.log("Matched immunodeficiency attestation form:", googleAppsScriptUrl)
     } else if (formType === "provider-visit-attestation-neurodegenerative") {
       googleAppsScriptUrl = process.env.GOOGLE_APPS_SCRIPT_NEURODEGENERATIVE_ATTESTATION
+      console.log("Matched neurodegenerative attestation form:", googleAppsScriptUrl)
     }
     // Letter Forms
     else if (formType === "letter-medical-necessity-immunodeficiency") {
