@@ -1,8 +1,6 @@
 "use client"
 
-import type React from "react"
-
-import { useState } from "react"
+import React, { useState } from "react"
 import Image from "next/image"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
@@ -13,25 +11,27 @@ import { Plus, Trash2, Download, Printer, CheckCircle, ArrowLeft } from "lucide-
 import { useToast } from "@/hooks/use-toast"
 import Link from "next/link"
 
-interface PatientCondition {
-  condition: string
-  dxAge: string
-}
+/**
+ * @typedef {Object} PatientCondition
+ * @property {string} condition
+ * @property {string} dxAge
+ */
 
-interface FamilyHistory {
-  relative: string
-  side: string
-  relationship: string
-  condition: string
-  dxAge: string
-}
+/**
+ * @typedef {Object} FamilyHistory
+ * @property {string} relative
+ * @property {string} side
+ * @property {string} relationship
+ * @property {string} condition
+ * @property {string} dxAge
+ */
 
 export function LetterMedicalNecessityNeurodegenerative() {
   const [patientName, setPatientName] = useState("")
   const [patientDOB, setPatientDOB] = useState("")
   const [date, setDate] = useState("")
-  const [patientConditions, setPatientConditions] = useState<PatientCondition[]>([{ condition: "", dxAge: "" }])
-  const [familyHistory, setFamilyHistory] = useState<FamilyHistory[]>([
+  const [patientConditions, setPatientConditions] = useState([{ condition: "", dxAge: "" }])
+  const [familyHistory, setFamilyHistory] = useState([
     { relative: "", side: "", relationship: "", condition: "", dxAge: "" },
   ])
   const [medicalManagement, setMedicalManagement] = useState("")
@@ -46,11 +46,11 @@ export function LetterMedicalNecessityNeurodegenerative() {
     setPatientConditions([...patientConditions, { condition: "", dxAge: "" }])
   }
 
-  const removePatientCondition = (index: number) => {
+  const removePatientCondition = (index) => {
     setPatientConditions(patientConditions.filter((_, i) => i !== index))
   }
 
-  const updatePatientCondition = (index: number, field: keyof PatientCondition, value: string) => {
+  const updatePatientCondition = (index, field, value) => {
     const updated = patientConditions.map((item, i) => (i === index ? { ...item, [field]: value } : item))
     setPatientConditions(updated)
   }
@@ -59,16 +59,16 @@ export function LetterMedicalNecessityNeurodegenerative() {
     setFamilyHistory([...familyHistory, { relative: "", side: "", relationship: "", condition: "", dxAge: "" }])
   }
 
-  const removeFamilyHistory = (index: number) => {
+  const removeFamilyHistory = (index) => {
     setFamilyHistory(familyHistory.filter((_, i) => i !== index))
   }
 
-  const updateFamilyHistory = (index: number, field: keyof FamilyHistory, value: string) => {
+  const updateFamilyHistory = (index, field, value) => {
     const updated = familyHistory.map((item, i) => (i === index ? { ...item, [field]: value } : item))
     setFamilyHistory(updated)
   }
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
     setIsSubmitting(true)
 

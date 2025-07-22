@@ -28,6 +28,7 @@ interface FamilyHistory {
 
 export function LetterMedicalNecessityImmunodeficiency() {
   const [patientName, setPatientName] = useState("")
+  const [patientDOB, setPatientDOB] = useState("")
   const [date, setDate] = useState("")
   const [patientConditions, setPatientConditions] = useState<PatientCondition[]>([{ condition: "", dxAge: "" }])
   const [familyHistory, setFamilyHistory] = useState<FamilyHistory[]>([
@@ -39,6 +40,8 @@ export function LetterMedicalNecessityImmunodeficiency() {
   const [hereditaryCondition, setHereditaryCondition] = useState("")
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [showSuccess, setShowSuccess] = useState(false)
+  const [formId, setFormId] = useState("")
+  const [submittedAt, setSubmittedAt] = useState("")
   const { toast } = useToast()
 
   const addPatientCondition = () => {
@@ -74,6 +77,7 @@ export function LetterMedicalNecessityImmunodeficiency() {
     console.log("Form submission started...")
     console.log("Form data:", {
       patientName,
+      patientDOB,
       date,
       patientConditions,
       familyHistory,
@@ -89,6 +93,7 @@ export function LetterMedicalNecessityImmunodeficiency() {
         specialty: "immunodeficiency",
         formData: {
           patientName,
+          patientDOB,
           date,
           patientConditions,
           familyHistory,
@@ -117,6 +122,8 @@ export function LetterMedicalNecessityImmunodeficiency() {
       console.log("Response result:", result)
 
       if (result.success) {
+        setFormId(`LMN-I-${Date.now()}`)
+        setSubmittedAt(new Date().toLocaleString())
         toast({
           title: "Form Submitted Successfully",
           description: `PDF saved to Google Drive: ${result.fileName}`,
@@ -159,8 +166,8 @@ export function LetterMedicalNecessityImmunodeficiency() {
                   </Link>
                 </Button>
                 <div className="text-sm text-gray-500">
-                  <p>Form ID: LMN-I-{Date.now()}</p>
-                  <p>Submitted: {new Date().toLocaleString()}</p>
+                  <p>Form ID: {formId}</p>
+                  <p>Submitted: {submittedAt}</p>
                 </div>
               </div>
             </CardContent>
@@ -240,8 +247,8 @@ export function LetterMedicalNecessityImmunodeficiency() {
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-8">
-          {/* Patient Name and Date */}
-          <div className="grid md:grid-cols-2 gap-6">
+          {/* Patient Information */}
+          <div className="grid md:grid-cols-3 gap-6">
             <div>
               <Label htmlFor="patientName" className="text-sm font-semibold text-slate-700">
                 Patient Name
@@ -252,6 +259,20 @@ export function LetterMedicalNecessityImmunodeficiency() {
                 onChange={(e) => setPatientName(e.target.value)}
                 className="mt-1"
                 placeholder="Enter patient name"
+                required
+              />
+            </div>
+            <div>
+              <Label htmlFor="patientDOB" className="text-sm font-semibold text-slate-700">
+                Patient Date of Birth
+              </Label>
+              <Input
+                id="patientDOB"
+                type="date"
+                value={patientDOB}
+                onChange={(e) => setPatientDOB(e.target.value)}
+                className="mt-1"
+                required
               />
             </div>
             <div>
@@ -264,6 +285,7 @@ export function LetterMedicalNecessityImmunodeficiency() {
                 value={date}
                 onChange={(e) => setDate(e.target.value)}
                 className="mt-1"
+                required
               />
             </div>
           </div>
@@ -273,7 +295,10 @@ export function LetterMedicalNecessityImmunodeficiency() {
             <div className="space-y-4">
               <p className="text-slate-800 leading-relaxed text-center font-semibold">To whomsoever it may concern:</p>
               <p className="text-slate-800 leading-relaxed">
-                I am writing on behalf of my patient, <span className="font-bold">{patientName || "Patient Name"}</span>{" "}
+                I am writing on behalf of my patient, <span className="font-bold">{patientName || "Patient Name"}</span>
+                {patientDOB && (
+                  <span> (DOB: <span className="font-bold">{new Date(patientDOB).toLocaleDateString()}</span>)</span>
+                )}{" "}
                 to document the medical necessity of Immunodeficiency genetic testing.
               </p>
               <p className="text-slate-800 leading-relaxed">

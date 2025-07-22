@@ -36,6 +36,12 @@ export async function POST(request: NextRequest) {
     } else if (formType === "letter-medical-necessity-neurodegenerative") {
       googleAppsScriptUrl = process.env.GOOGLE_APPS_SCRIPT_NEURODEGENERATIVE_LETTER
     }
+    // Add this block for generic formType + specialty
+    else if (formType === "letter-medical-necessity" && specialty === "immunodeficiency") {
+      googleAppsScriptUrl = process.env.GOOGLE_APPS_SCRIPT_IMMUNODEFICIENCY_LETTER
+    } else if (formType === "letter-medical-necessity" && specialty === "neurodegenerative") {
+      googleAppsScriptUrl = process.env.GOOGLE_APPS_SCRIPT_NEURODEGENERATIVE_LETTER
+    }
     // Medication Reconciliation Forms
     else if (formType === "medication-reconciliation-immunodeficiency") {
       googleAppsScriptUrl = process.env.GOOGLE_APPS_SCRIPT_IMMUNODEFICIENCY_MEDICATION_RECONCILIATION
