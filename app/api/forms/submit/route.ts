@@ -1,5 +1,13 @@
 import { NextRequest, NextResponse } from "next/server"
 
+// Helper to add CORS headers to all responses
+function withCORS(response: NextResponse) {
+  response.headers.set("Access-Control-Allow-Origin", "*")
+  response.headers.set("Access-Control-Allow-Methods", "POST, OPTIONS")
+  response.headers.set("Access-Control-Allow-Headers", "Content-Type")
+  return response
+}
+
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
@@ -59,11 +67,11 @@ export async function POST(request: NextRequest) {
     
     if (!googleAppsScriptUrl) {
       console.error("No Google Apps Script URL found for:", formType, specialty)
-      return NextResponse.json({
+      return withCORS(NextResponse.json({
         success: false,
         error: `No Google Apps Script configured for ${formType} (${specialty})`,
         details: "Please check your environment variables and ensure the correct script URL is set"
-      }, { status: 400 })
+      }, { status: 400 }))
     }
 
     console.log("Calling Google Apps Script:", googleAppsScriptUrl)
@@ -108,13 +116,13 @@ export async function POST(request: NextRequest) {
 
     if (result.success) {
       console.log("Form submission successful:", result.fileName)
-      return NextResponse.json({
+      return withCORS(NextResponse.json({
         success: true,
         fileId: result.fileId,
         fileName: result.fileName,
         driveUrl: result.driveUrl,
         message: result.message || "Form submitted and saved to Google Drive successfully",
-      })
+      }))
     } else {
       console.error("Google Apps Script returned error:", result.error)
       throw new Error(result.error || "Google Apps Script returned an error")
@@ -122,25 +130,18 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     console.error("Form submission error:", error)
     // Return a user-friendly error
-    return NextResponse.json(
+    return withCORS(NextResponse.json(
       {
         success: false,
         error: "Form submission failed. Please try again or contact support.",
         details: error instanceof Error ? error.message : "Unknown error occurred",
       },
       { status: 500 },
-    )
+    ))
   }
 }
 
-// Optionally, for CORS preflight:
 export async function OPTIONS() {
-  return new NextResponse(null, {
-    status: 200,
-    headers: {
-      "Access-Control-Allow-Origin": "*",
-      "Access-Control-Allow-Methods": "POST, OPTIONS",
-      "Access-Control-Allow-Headers": "Content-Type",
-    },
-  })
+  // Always respond with CORS headers for preflight
+  return withCORS(new NextResponse(null, { status: 200 }))
 }
