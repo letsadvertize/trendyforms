@@ -1,4 +1,4 @@
-import { type NextRequest, NextResponse } from "next/server"
+import { NextRequest, NextResponse } from "next/server"
 
 export async function POST(request: NextRequest) {
   try {
@@ -133,6 +133,7 @@ export async function POST(request: NextRequest) {
   }
 }
 
+// Optionally, for CORS preflight:
 export async function OPTIONS() {
   return new NextResponse(null, {
     status: 200,
