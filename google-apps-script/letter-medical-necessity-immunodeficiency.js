@@ -547,3 +547,20 @@ export function LetterMedicalNecessityNeurodegenerative() {
     </div>
   )
 }
+
+function doPost(e) {
+  try {
+    // ...existing code...
+    return ContentService.createTextOutput(JSON.stringify({
+      success: true,
+      // ...other fields...
+    })).setMimeType(ContentService.MimeType.JSON)
+  } catch (error) {
+    // Always return JSON on error
+    return ContentService.createTextOutput(JSON.stringify({
+      success: false,
+      error: error.toString(),
+      message: "Failed to process Letter of Medical Necessity (Immunodeficiency)"
+    })).setMimeType(ContentService.MimeType.JSON)
+  }
+}
