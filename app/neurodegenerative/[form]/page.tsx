@@ -23,13 +23,14 @@ const formComponents: Record<string, React.ComponentType> = {
 }
 
 interface PageProps {
-  params: Promise<{
+  params: {
     form: string
-  }>
+  }
 }
 
-export default async function NeurodegenerativeFormPage({ params }: PageProps) {
-  const { form } = await params
+export default async function NeurodegenerativeFormPage(props: PageProps) {
+  const params = await props.params
+  const { form } = params
   const formTitle = formTitles[form]
   const FormComponent = formComponents[form]
 

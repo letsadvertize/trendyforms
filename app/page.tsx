@@ -23,6 +23,14 @@ const categories = [
     gradient: "from-purple-600 to-purple-700",
     hoverGradient: "from-purple-700 to-purple-800",
   },
+  {
+    id: "other-providers",
+    title: "Other Providers",
+    description: "Forms for other healthcare providers and general use",
+    icon: NotebookPen, // Changed to NotebookPen for a more distinct and professional look
+    gradient: "from-green-600 to-green-700", // Updated to a unique but consistent gradient
+    hoverGradient: "from-green-700 to-green-800", // Updated hover gradient
+  },
 ]
 
 const allForms = [

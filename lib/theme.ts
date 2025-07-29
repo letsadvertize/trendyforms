@@ -40,6 +40,15 @@ export const appTheme = {
       light: "slate-50",
       text: "slate-800",
       border: "slate-600"
+    },
+    otherProviders: {
+      primary: "emerald",
+      gradient: "from-emerald-50 to-green-100",
+      header: "from-emerald-600 to-green-600",
+      accent: "emerald-600",
+      light: "emerald-50",
+      text: "emerald-800",
+      border: "emerald-600"
     }
   },
 

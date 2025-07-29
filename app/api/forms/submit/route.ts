@@ -29,6 +29,15 @@ export async function POST(request: NextRequest) {
     } else if (formType === "patient-progress-neurodegenerative") {
       googleAppsScriptUrl = process.env.GOOGLE_APPS_SCRIPT_NEURODEGENERATIVE_PROGRESS
       console.log("Matched neurodegenerative progress form:", googleAppsScriptUrl)
+    } else if (formType === "patient-progress-other-providers") {
+      // Debug: Log the env variable value
+      console.log("GOOGLE_APPS_SCRIPT_OTHER_PROVIDERS_PROGRESS:", process.env.GOOGLE_APPS_SCRIPT_OTHER_PROVIDERS_PROGRESS)
+      googleAppsScriptUrl = process.env.GOOGLE_APPS_SCRIPT_OTHER_PROVIDERS_PROGRESS
+      if (!googleAppsScriptUrl) {
+        console.error("Missing GOOGLE_APPS_SCRIPT_OTHER_PROVIDERS_PROGRESS environment variable.")
+        throw new Error("Missing GOOGLE_APPS_SCRIPT_OTHER_PROVIDERS_PROGRESS environment variable.")
+      }
+      console.log("Matched other providers progress form:", googleAppsScriptUrl)
     }
     // Attestation Forms
     else if (formType === "provider-visit-attestation-immunodeficiency") {
@@ -38,11 +47,17 @@ export async function POST(request: NextRequest) {
       googleAppsScriptUrl = process.env.GOOGLE_APPS_SCRIPT_NEURODEGENERATIVE_ATTESTATION
       console.log("Matched neurodegenerative attestation form:", googleAppsScriptUrl)
     }
+    // Provider Visit Attestation - Other Providers
+    else if (formType === "provider-visit-attestation-other-providers") {
+      googleAppsScriptUrl = process.env.GOOGLE_APPS_SCRIPT_OTHER_PROVIDERS_ATTESTATION
+    }
     // Letter Forms
     else if (formType === "letter-medical-necessity-immunodeficiency") {
       googleAppsScriptUrl = process.env.GOOGLE_APPS_SCRIPT_IMMUNODEFICIENCY_LETTER
     } else if (formType === "letter-medical-necessity-neurodegenerative") {
       googleAppsScriptUrl = process.env.GOOGLE_APPS_SCRIPT_NEURODEGENERATIVE_LETTER
+    } else if (formType === "letter-medical-necessity-other-providers") {
+      googleAppsScriptUrl = process.env.GOOGLE_APPS_SCRIPT_OTHER_PROVIDERS_LETTER
     }
     // Add this block for generic formType + specialty
     else if (formType === "letter-medical-necessity" && specialty === "immunodeficiency") {
@@ -55,6 +70,9 @@ export async function POST(request: NextRequest) {
       googleAppsScriptUrl = process.env.GOOGLE_APPS_SCRIPT_IMMUNODEFICIENCY_MEDICATION_RECONCILIATION
     } else if (formType === "medication-reconciliation-neurodegenerative") {
       googleAppsScriptUrl = process.env.GOOGLE_APPS_SCRIPT_NEURODEGENERATIVE_MEDICATION_RECONCILIATION
+    } else if (formType === "medication-reconciliation-other-providers") {
+      // Requires GOOGLE_APPS_SCRIPT_OTHER_PROVIDERS_MEDICATION_RECONCILIATION in .env.local
+      googleAppsScriptUrl = process.env.GOOGLE_APPS_SCRIPT_OTHER_PROVIDERS_MEDICATION_RECONCILIATION
     }
     // Legacy pattern matching for backward compatibility
     else if ((formType === "progress" || formType === "progress-note") && specialty === "immunodeficiency") {
@@ -94,8 +112,9 @@ export async function POST(request: NextRequest) {
 
     if (!response.ok) {
       const errorText = await response.text()
-      console.error("Google Apps Script error:", errorText)
-      throw new Error(`Google Apps Script HTTP error ${response.status}: ${errorText.substring(0, 200)}`)
+      console.error("Google Apps Script error status:", response.status)
+      console.error("Google Apps Script error body:", errorText)
+      throw new Error(`Google Apps Script HTTP error ${response.status}: ${errorText}`)
     }
     
     const responseText = await response.text()

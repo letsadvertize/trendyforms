@@ -33,6 +33,8 @@ export function PatientProgressNeurodegenerative() {
   const { toast } = useToast()
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [showSuccess, setShowSuccess] = useState(false)
+  const [formId, setFormId] = useState<string>("")
+  const [submittedAt, setSubmittedAt] = useState<string>("")
   const [formData, setFormData] = useState<FormData>({
     patientName: "",
     dateOfBirth: "",
@@ -81,6 +83,8 @@ export function PatientProgressNeurodegenerative() {
         if (result.driveUrl) {
           window.open(result.driveUrl, "_blank")
         }
+        setFormId(`PNP-${Date.now()}`)
+        setSubmittedAt(new Date().toLocaleString())
         setShowSuccess(true)
       } else {
         throw new Error(result.error || "Failed to submit form")
@@ -116,8 +120,8 @@ export function PatientProgressNeurodegenerative() {
                   </Link>
                 </Button>
                 <div className="text-sm text-gray-500">
-                  <p>Form ID: PNP-{Date.now()}</p>
-                  <p>Submitted: {new Date().toLocaleString()}</p>
+                  <p>Form ID: {formId}</p>
+                  <p>Submitted: {submittedAt}</p>
                 </div>
               </div>
             </CardContent>

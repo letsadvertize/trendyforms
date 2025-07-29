@@ -37,6 +37,8 @@ export function LetterMedicalNecessityNeurodegenerative() {
   const [medicalManagement, setMedicalManagement] = useState("")
   const [providerName, setProviderName] = useState("")
   const [providerDate, setProviderDate] = useState("")
+  const [formId, setFormId] = useState<string>("")
+  const [submittedAt, setSubmittedAt] = useState<string>("")
 
   const { toast } = useToast()
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -131,6 +133,8 @@ export function LetterMedicalNecessityNeurodegenerative() {
         if (result.driveUrl) {
           window.open(result.driveUrl, "_blank")
         }
+        setFormId(`LMN-N-${Date.now()}`)
+        setSubmittedAt(new Date().toLocaleString())
         setShowSuccess(true)
       } else {
         console.error("Form submission failed:", result.error)
@@ -167,8 +171,8 @@ export function LetterMedicalNecessityNeurodegenerative() {
                   </Link>
                 </Button>
                 <div className="text-sm text-gray-500">
-                  <p>Form ID: LMN-N-{Date.now()}</p>
-                  <p>Submitted: {new Date().toLocaleString()}</p>
+                  <p>Form ID: {formId}</p>
+                  <p>Submitted: {submittedAt}</p>
                 </div>
               </div>
             </CardContent>

@@ -3,23 +3,23 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { ArrowLeft } from "lucide-react"
 import { notFound } from "next/navigation"
-import { LetterMedicalNecessityImmunodeficiency } from "@/components/forms/letter-medical-necessity-immunodeficiency"
-import { PatientProgressImmunodeficiency } from "@/components/forms/patient-progress-immunodeficiency"
-import { ProviderVisitAttestationImmunodeficiency } from "@/components/forms/provider-visit-attestation-immunodeficiency"
-import { MedicationReconciliationImmunodeficiency } from "@/components/forms/medication-reconciliation-immunodeficiency"
+import { LetterMedicalNecessityOtherProviders } from "@/components/forms/letter-medical-necessity-other-providers"
+import { PatientProgressOtherProviders } from "@/components/forms/patient-progress-other-providers"
+import { ProviderVisitAttestationOtherProviders } from "@/components/forms/provider-visit-attestation-other-providers"
+import { MedicationReconciliationOtherProviders } from "@/components/forms/medication-reconciliation-other-providers"
 
 const formTitles: Record<string, string> = {
   "letter-medical-necessity": "Letter of Medical Necessity",
   "provider-visit-attestation": "Provider Visit Attestation",
   "medication-reconciliation": "Medication Reconciliation",
-  "progress-note": "Progress Note",
+  "patient-progress-other-providers": "Patient Progress Form",
 }
 
 const formComponents: Record<string, React.ComponentType> = {
-  "letter-medical-necessity": LetterMedicalNecessityImmunodeficiency,
-  "provider-visit-attestation": ProviderVisitAttestationImmunodeficiency,
-  "medication-reconciliation": MedicationReconciliationImmunodeficiency,
-  "progress-note": PatientProgressImmunodeficiency,
+  "letter-medical-necessity": LetterMedicalNecessityOtherProviders,
+  "provider-visit-attestation": ProviderVisitAttestationOtherProviders,
+  "medication-reconciliation": MedicationReconciliationOtherProviders,
+  "patient-progress-other-providers": PatientProgressOtherProviders,
 }
 
 interface PageProps {
@@ -28,7 +28,7 @@ interface PageProps {
   }
 }
 
-export default async function ImunodeficiencyFormPage(props: PageProps) {
+export default async function OtherProvidersFormPage(props: PageProps) {
   const params = await props.params
   const { form } = params
   const formTitle = formTitles[form]
@@ -42,10 +42,10 @@ export default async function ImunodeficiencyFormPage(props: PageProps) {
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
       <div className="container mx-auto px-4 py-8">
         <div className="mb-8">
-          <Link href="/immunodeficiency">
+          <Link href="/other-providers">
             <Button variant="ghost" className="mb-4">
               <ArrowLeft className="mr-2 h-4 w-4" />
-              Back to Immunodeficiency Forms
+              Back to Other Providers Forms
             </Button>
           </Link>
         </div>
@@ -66,11 +66,11 @@ export default async function ImunodeficiencyFormPage(props: PageProps) {
 }
 
 export async function generateStaticParams() {
-  // Define all possible form routes that should be pre-generated
   return [
     { form: 'letter-medical-necessity' },
     { form: 'provider-visit-attestation' },
     { form: 'medication-reconciliation' },
-    { form: 'progress-note' },
+    { form: 'patient-progress-other-providers' },
   ]
 }
+
