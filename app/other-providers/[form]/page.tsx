@@ -22,15 +22,8 @@ const formComponents: Record<string, React.ComponentType> = {
   "patient-progress-other-providers": PatientProgressOtherProviders,
 }
 
-interface PageProps {
-  params: {
-    form: string
-  }
-}
-
-export default async function OtherProvidersFormPage(props: PageProps) {
-  const params = props.params
-  const { form } = params
+export default async function OtherProvidersFormPage(props: any) {
+  const { form } = props.params
   const formTitle = formTitles[form]
   const FormComponent = formComponents[form]
 

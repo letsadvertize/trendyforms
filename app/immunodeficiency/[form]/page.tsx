@@ -22,14 +22,9 @@ const formComponents: Record<string, React.ComponentType> = {
   "progress-note": PatientProgressImmunodeficiency,
 }
 
-type PageProps = {
-  params: {
-    form: string;
-  };
-}
-
-export default async function ImunodeficiencyFormPage({ params }: PageProps) {
-  const { form } = params
+// Use 'any' for the props to avoid Next.js type mismatch
+export default async function ImunodeficiencyFormPage(props: any) {
+  const { form } = props.params
   const formTitle = formTitles[form]
   const FormComponent = formComponents[form]
 
@@ -67,9 +62,11 @@ export default async function ImunodeficiencyFormPage({ params }: PageProps) {
 export async function generateStaticParams() {
   // Define all possible form routes that should be pre-generated
   return [
+
     { form: 'letter-medical-necessity' },
     { form: 'provider-visit-attestation' },
     { form: 'medication-reconciliation' },
     { form: 'progress-note' },
+
   ]
 }
