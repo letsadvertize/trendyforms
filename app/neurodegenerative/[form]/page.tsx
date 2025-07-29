@@ -29,7 +29,7 @@ interface PageProps {
 }
 
 export default async function NeurodegenerativeFormPage(props: PageProps) {
-  const params = await props.params
+  const params = props.params
   const { form } = params
   const formTitle = formTitles[form]
   const FormComponent = formComponents[form]
