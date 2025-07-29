@@ -73,4 +73,3 @@ export async function generateStaticParams() {
     { form: 'progress-note' },
   ]
 }
-}
