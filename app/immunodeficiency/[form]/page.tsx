@@ -22,14 +22,13 @@ const formComponents: Record<string, React.ComponentType> = {
   "progress-note": PatientProgressImmunodeficiency,
 }
 
-interface PageProps {
+type PageProps = {
   params: {
-    form: string
-  }
+    form: string;
+  };
 }
 
-export default async function ImunodeficiencyFormPage(props: PageProps) {
-  const params = props.params
+export default async function ImunodeficiencyFormPage({ params }: PageProps) {
   const { form } = params
   const formTitle = formTitles[form]
   const FormComponent = formComponents[form]
@@ -73,4 +72,5 @@ export async function generateStaticParams() {
     { form: 'medication-reconciliation' },
     { form: 'progress-note' },
   ]
+}
 }
