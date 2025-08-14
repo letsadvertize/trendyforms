@@ -3,12 +3,10 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { ArrowLeft } from "lucide-react"
 import { notFound } from "next/navigation"
+import { LetterMedicalNecessityDiabetesModyPredict } from "@/components/forms/letter-medical-necessity-diabetes-mody-predict"
+import { MedicationReconciliationDiabetesModyPredict } from "@/components/forms/medication-reconciliation-diabetes-mody-predict"
+import { ProgressNoteDiabetesModyPredict } from "@/components/forms/progress-note-diabetes-mody-predict"
 
-
-import { LetterMedicalNecessityDiabetesModyPredict } from "../../../components/forms/letter-medical-necessity-diabetes-mody-predict";
-import { ProviderVisitAttestationDiabetesModyPredict } from "../../../components/forms/provider-visit-attestation-diabetes-mody-predict";
-import { MedicationReconciliationDiabetesModyPredict } from "../../../components/forms/medication-reconciliation-diabetes-mody-predict";
-import { ProgressNoteDiabetesModyPredict } from "../../../components/forms/progress-note-diabetes-mody-predict";
 
 const formTitles: Record<string, string> = {
   "letter-medical-necessity": "Letter of Medical Necessity",
@@ -19,24 +17,21 @@ const formTitles: Record<string, string> = {
 
 const formComponents: Record<string, React.ComponentType> = {
   "letter-medical-necessity": LetterMedicalNecessityDiabetesModyPredict,
-  "provider-visit-attestation": ProviderVisitAttestationDiabetesModyPredict,
   "medication-reconciliation": MedicationReconciliationDiabetesModyPredict,
   "progress-note": ProgressNoteDiabetesModyPredict,
 }
 
-
-export default async function DiabetesModyPredictFormPage(props: any) {
-  const params = await props.params;
-  const { form } = params;
+export default async function DiabetesModyPredictFormPage({ params }: { params: Promise<{ form: string }> }) {
+  const { form } = await params;
   const formTitle = formTitles[form];
   const FormComponent = formComponents[form];
 
   if (!formTitle) {
-    notFound()
+    notFound();
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-100">
+    <div className="min-h-screen bg-gradient-to-br from-pink-50 to-pink-100">
       <div className="container mx-auto px-4 py-8">
         <div className="mb-8">
           <Link href="/diabetes-mody-predict">
@@ -58,5 +53,5 @@ export default async function DiabetesModyPredictFormPage(props: any) {
         </div>
       </div>
     </div>
-  )
+  );
 }

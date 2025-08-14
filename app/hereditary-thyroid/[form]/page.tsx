@@ -27,12 +27,8 @@ const formComponents: Record<string, React.ComponentType> = {
 }
 
 
-interface HereditaryThyroidFormPageProps {
-  params: { form: string }
-}
-
-export default async function HereditaryThyroidFormPage({ params }: HereditaryThyroidFormPageProps) {
-  const { form } = params;
+export default async function HereditaryThyroidFormPage({ params }: { params: Promise<{ form: string }> }) {
+  const { form } = await params;
   const formTitle = formTitles[form];
   const FormComponent = formComponents[form];
 

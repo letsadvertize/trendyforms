@@ -3,10 +3,6 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { ArrowLeft } from "lucide-react"
 import { notFound } from "next/navigation"
-import { LetterMedicalNecessityImmunodeficiency } from "@/components/forms/letter-medical-necessity-immunodeficiency"
-import { PatientProgressImmunodeficiency } from "@/components/forms/patient-progress-immunodeficiency"
-import { ProviderVisitAttestationImmunodeficiency } from "@/components/forms/provider-visit-attestation-immunodeficiency"
-import { MedicationReconciliationImmunodeficiency } from "@/components/forms/medication-reconciliation-immunodeficiency"
 
 const formTitles: Record<string, string> = {
   "letter-medical-necessity": "Letter of Medical Necessity",
@@ -15,25 +11,16 @@ const formTitles: Record<string, string> = {
   "progress-note": "Progress Note",
 }
 
-const formComponents: Record<string, React.ComponentType> = {
-  "letter-medical-necessity": LetterMedicalNecessityImmunodeficiency,
-  "provider-visit-attestation": ProviderVisitAttestationImmunodeficiency,
-  "medication-reconciliation": MedicationReconciliationImmunodeficiency,
-  "progress-note": PatientProgressImmunodeficiency,
-}
-
-// Use 'any' for the props to avoid Next.js type mismatch
-export default async function ImunodeficiencyFormPage(props: any) {
-  const { form } = props.params
-  const formTitle = formTitles[form]
-  const FormComponent = formComponents[form]
+export default async function ImmunodeficiencyFormPage({ params }: { params: Promise<{ form: string }> }) {
+  const { form } = await params;
+  const formTitle = formTitles[form];
 
   if (!formTitle) {
-    notFound()
+    notFound();
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-100">
       <div className="container mx-auto px-4 py-8">
         <div className="mb-8">
           <Link href="/immunodeficiency">
@@ -43,30 +30,13 @@ export default async function ImunodeficiencyFormPage(props: any) {
             </Button>
           </Link>
         </div>
-
         <div className="max-w-4xl mx-auto">
-          {FormComponent ? (
-            <FormComponent />
-          ) : (
-            <div className="bg-white rounded-lg shadow-lg p-8">
-              <h1 className="text-2xl font-bold text-center mb-8">{formTitle}</h1>
-              <p className="text-center text-gray-600">Form content area - ready for implementation</p>
-            </div>
-          )}
+          <div className="bg-white rounded-lg shadow-lg p-8">
+            <h1 className="text-2xl font-bold text-center mb-8">{formTitle}</h1>
+            <p className="text-center text-gray-600">Form content area - ready for implementation</p>
+          </div>
         </div>
       </div>
     </div>
-  )
-}
-
-export async function generateStaticParams() {
-  // Define all possible form routes that should be pre-generated
-  return [
-
-    { form: 'letter-medical-necessity' },
-    { form: 'provider-visit-attestation' },
-    { form: 'medication-reconciliation' },
-    { form: 'progress-note' },
-
-  ]
+  );
 }

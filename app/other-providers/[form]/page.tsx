@@ -22,13 +22,13 @@ const formComponents: Record<string, React.ComponentType> = {
   "patient-progress-other-providers": PatientProgressOtherProviders,
 }
 
-export default async function OtherProvidersFormPage(props: any) {
-  const { form } = props.params
-  const formTitle = formTitles[form]
-  const FormComponent = formComponents[form]
+export default async function OtherProvidersFormPage({ params }: { params: Promise<{ form: string }> }) {
+  const { form } = await params;
+  const formTitle = formTitles[form];
+  const FormComponent = formComponents[form];
 
   if (!formTitle) {
-    notFound()
+    notFound();
   }
 
   return (
