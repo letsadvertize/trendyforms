@@ -24,6 +24,30 @@ const categories = [
     hoverGradient: "from-purple-700 to-purple-800",
   },
   {
+    id: "hereditary-thyroid",
+    title: "Hereditary Thyroid Disorder Risk",
+    description: "Forms for hereditary thyroid disorder risk assessment and management",
+    icon: Pill,
+    gradient: "from-yellow-500 to-yellow-600",
+    hoverGradient: "from-yellow-600 to-yellow-700",
+  },
+  {
+    id: "diabetes-mody-predict",
+    title: "Diabetes MODY and Diabetes Predict",
+    description: "Forms for MODY and diabetes risk prediction and management",
+    icon: ClipboardList,
+    gradient: "from-pink-500 to-pink-600",
+    hoverGradient: "from-pink-600 to-pink-700",
+  },
+  {
+    id: "cardiopulmonary-testing",
+    title: "Combined Cardiopulmonary Testing",
+    description: "Forms for combined cardiopulmonary assessment and documentation",
+    icon: FileText,
+    gradient: "from-red-500 to-red-600",
+    hoverGradient: "from-red-600 to-red-700",
+  },
+  {
     id: "other-providers",
     title: "Other Providers",
     description: "Forms for other healthcare providers and general use",
@@ -33,7 +57,13 @@ const categories = [
   },
 ]
 
-const allForms = [
+export type FormType = {
+  title: string;
+  description: string;
+  icon: React.ElementType;
+};
+
+export const allForms: FormType[] = [
   {
     title: "Letter of Medical Necessity",
     description: "Medical necessity documentation for treatments",
@@ -54,7 +84,7 @@ const allForms = [
     description: "Patient progress assessment and documentation",
     icon: NotebookPen,
   },
-]
+];
 
 export default function HomePage() {
   return (
