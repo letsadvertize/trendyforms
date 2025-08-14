@@ -19,11 +19,12 @@ export async function POST(request: NextRequest) {
     console.log("Specialty:", specialty)
     console.log("Form Data:", JSON.stringify(formData, null, 2))
 
-  // Get the form-specific Google Apps Script URL from environment variables
-  let googleAppsScriptUrl = null
-  console.log("DEBUG: .env.NEXT_PUBLIC_HEREDITARY_THYROID_MEDICATION_RECONCILIATION_URL:", process.env.NEXT_PUBLIC_HEREDITARY_THYROID_MEDICATION_RECONCILIATION_URL);
+    // Get the form-specific Google Apps Script URL from environment variables
+    let googleAppsScriptUrl = null
     
-    // Progress Forms - Handle both explicit and pattern-based matching
+    // =============================================================================
+    // PROGRESS NOTE FORMS
+    // =============================================================================
     if (formType === "patient-progress-immunodeficiency") {
       googleAppsScriptUrl = process.env.GOOGLE_APPS_SCRIPT_IMMUNODEFICIENCY_PROGRESS
       console.log("Matched immunodeficiency progress form:", googleAppsScriptUrl)
@@ -31,95 +32,117 @@ export async function POST(request: NextRequest) {
       googleAppsScriptUrl = process.env.GOOGLE_APPS_SCRIPT_NEURODEGENERATIVE_PROGRESS
       console.log("Matched neurodegenerative progress form:", googleAppsScriptUrl)
     } else if (formType === "patient-progress-other-providers") {
-      // Debug: Log the env variable value
-      console.log("GOOGLE_APPS_SCRIPT_OTHER_PROVIDERS_PROGRESS:", process.env.GOOGLE_APPS_SCRIPT_OTHER_PROVIDERS_PROGRESS)
       googleAppsScriptUrl = process.env.GOOGLE_APPS_SCRIPT_OTHER_PROVIDERS_PROGRESS
-      if (!googleAppsScriptUrl) {
-        console.error("Missing GOOGLE_APPS_SCRIPT_OTHER_PROVIDERS_PROGRESS environment variable.")
-        throw new Error("Missing GOOGLE_APPS_SCRIPT_OTHER_PROVIDERS_PROGRESS environment variable.")
-      }
       console.log("Matched other providers progress form:", googleAppsScriptUrl)
+    } else if (formType === "progress-note-hereditary-thyroid") {
+      googleAppsScriptUrl = process.env.NEXT_PUBLIC_HEREDITARY_THYROID_PROGRESS_NOTE_URL
+      console.log("Matched hereditary thyroid progress form:", googleAppsScriptUrl)
+    } else if (formType === "progress-note-diabetes-mody-predict") {
+      googleAppsScriptUrl = process.env.NEXT_PUBLIC_DIABETES_MODY_PREDICT_PROGRESS_NOTE_URL
+      console.log("Matched diabetes mody predict progress form:", googleAppsScriptUrl)
+    } else if (formType === "progress-note-cardiopulmonary-testing") {
+      googleAppsScriptUrl = process.env.NEXT_PUBLIC_CARDIOPULMONARY_TESTING_PROGRESS_NOTE_URL
+      console.log("Matched cardiopulmonary testing progress form:", googleAppsScriptUrl)
     }
-    // Attestation Forms
+    
+    // =============================================================================
+    // PROVIDER VISIT ATTESTATION FORMS
+    // =============================================================================
     else if (formType === "provider-visit-attestation-immunodeficiency") {
       googleAppsScriptUrl = process.env.GOOGLE_APPS_SCRIPT_IMMUNODEFICIENCY_ATTESTATION
       console.log("Matched immunodeficiency attestation form:", googleAppsScriptUrl)
     } else if (formType === "provider-visit-attestation-neurodegenerative") {
       googleAppsScriptUrl = process.env.GOOGLE_APPS_SCRIPT_NEURODEGENERATIVE_ATTESTATION
       console.log("Matched neurodegenerative attestation form:", googleAppsScriptUrl)
+    } else if (formType === "provider-visit-attestation-other-providers") {
+      googleAppsScriptUrl = process.env.GOOGLE_APPS_SCRIPT_OTHER_PROVIDERS_ATTESTATION
+      console.log("Matched other providers attestation form:", googleAppsScriptUrl)
     } else if (formType === "provider-visit-attestation-hereditary-thyroid") {
       googleAppsScriptUrl = process.env.NEXT_PUBLIC_HEREDITARY_THYROID_PROVIDER_VISIT_ATTESTATION_URL
-      console.log("Matched hereditary thyroid provider visit attestation form:", googleAppsScriptUrl)
+      console.log("Matched hereditary thyroid attestation form:", googleAppsScriptUrl)
     } else if (formType === "provider-visit-attestation-diabetes-mody-predict") {
-      googleAppsScriptUrl = process.env.NEXT_PUBLIC_DIABETES_MODY_PREDICT_PROVIDER_VISIT_ATTESTATION_URL;
-      console.log("Matched diabetes mody predict provider visit attestation form:", googleAppsScriptUrl);
+      googleAppsScriptUrl = process.env.NEXT_PUBLIC_DIABETES_MODY_PREDICT_PROVIDER_VISIT_ATTESTATION_URL
+      console.log("Matched diabetes mody predict attestation form:", googleAppsScriptUrl)
     } else if (formType === "provider-visit-attestation-cardiopulmonary-testing") {
-      googleAppsScriptUrl = process.env.NEXT_PUBLIC_CARDIOPULMONARY_TESTING_PROVIDER_VISIT_ATTESTATION_URL;
-      console.log("Matched cardiopulmonary testing provider visit attestation form:", googleAppsScriptUrl);
+      googleAppsScriptUrl = process.env.NEXT_PUBLIC_CARDIOPULMONARY_TESTING_PROVIDER_VISIT_ATTESTATION_URL
+      console.log("Matched cardiopulmonary testing attestation form:", googleAppsScriptUrl)
     }
-    // Provider Visit Attestation - Other Providers
-    else if (formType === "provider-visit-attestation-other-providers") {
-      googleAppsScriptUrl = process.env.GOOGLE_APPS_SCRIPT_OTHER_PROVIDERS_ATTESTATION
-    }
-    // Letter Forms
+    
+    // =============================================================================
+    // LETTER OF MEDICAL NECESSITY FORMS
+    // =============================================================================
     else if (formType === "letter-medical-necessity-immunodeficiency") {
       googleAppsScriptUrl = process.env.GOOGLE_APPS_SCRIPT_IMMUNODEFICIENCY_LETTER
+      console.log("Matched immunodeficiency letter form:", googleAppsScriptUrl)
     } else if (formType === "letter-medical-necessity-neurodegenerative") {
       googleAppsScriptUrl = process.env.GOOGLE_APPS_SCRIPT_NEURODEGENERATIVE_LETTER
+      console.log("Matched neurodegenerative letter form:", googleAppsScriptUrl)
     } else if (formType === "letter-medical-necessity-other-providers") {
       googleAppsScriptUrl = process.env.GOOGLE_APPS_SCRIPT_OTHER_PROVIDERS_LETTER
+      console.log("Matched other providers letter form:", googleAppsScriptUrl)
     } else if (formType === "letter-medical-necessity-hereditary-thyroid") {
       googleAppsScriptUrl = process.env.NEXT_PUBLIC_HEREDITARY_THYROID_LETTER_URL
+      console.log("Matched hereditary thyroid letter form:", googleAppsScriptUrl)
     } else if (formType === "letter-medical-necessity-diabetes-mody-predict") {
-      googleAppsScriptUrl = process.env.NEXT_PUBLIC_DIABETES_MODY_PREDICT_LETTER_URL;
+      googleAppsScriptUrl = process.env.NEXT_PUBLIC_DIABETES_MODY_PREDICT_LETTER_URL
+      console.log("Matched diabetes mody predict letter form:", googleAppsScriptUrl)
     } else if (formType === "letter-medical-necessity-cardiopulmonary-testing") {
-      googleAppsScriptUrl = process.env.NEXT_PUBLIC_CARDIOPULMONARY_TESTING_LETTER_URL;
+      googleAppsScriptUrl = process.env.NEXT_PUBLIC_CARDIOPULMONARY_TESTING_LETTER_URL
+      console.log("Matched cardiopulmonary testing letter form:", googleAppsScriptUrl)
     }
-    // Add this block for generic formType + specialty
+    
+    // =============================================================================
+    // MEDICATION RECONCILIATION FORMS
+    // =============================================================================
+    else if (formType === "medication-reconciliation-immunodeficiency") {
+      googleAppsScriptUrl = process.env.GOOGLE_APPS_SCRIPT_IMMUNODEFICIENCY_MEDICATION_RECONCILIATION
+      console.log("Matched immunodeficiency medication reconciliation form:", googleAppsScriptUrl)
+    } else if (formType === "medication-reconciliation-neurodegenerative") {
+      googleAppsScriptUrl = process.env.GOOGLE_APPS_SCRIPT_NEURODEGENERATIVE_MEDICATION_RECONCILIATION
+      console.log("Matched neurodegenerative medication reconciliation form:", googleAppsScriptUrl)
+    } else if (formType === "medication-reconciliation-other-providers") {
+      googleAppsScriptUrl = process.env.GOOGLE_APPS_SCRIPT_OTHER_PROVIDERS_MEDICATION_RECONCILIATION
+      console.log("Matched other providers medication reconciliation form:", googleAppsScriptUrl)
+    } else if (formType === "medication-reconciliation-hereditary-thyroid") {
+      googleAppsScriptUrl = process.env.NEXT_PUBLIC_HEREDITARY_THYROID_MEDICATION_RECONCILIATION_URL
+      console.log("Matched hereditary thyroid medication reconciliation form:", googleAppsScriptUrl)
+    } else if (formType === "medication-reconciliation-diabetes-mody-predict") {
+      googleAppsScriptUrl = process.env.NEXT_PUBLIC_DIABETES_MODY_PREDICT_MEDICATION_RECONCILIATION_URL
+      console.log("Matched diabetes mody predict medication reconciliation form:", googleAppsScriptUrl)
+    } else if (formType === "medication-reconciliation-cardiopulmonary-testing") {
+      googleAppsScriptUrl = process.env.NEXT_PUBLIC_CARDIOPULMONARY_TESTING_MEDICATION_RECONCILIATION_URL
+      console.log("Matched cardiopulmonary testing medication reconciliation form:", googleAppsScriptUrl)
+    }
+    
+    // =============================================================================
+    // LEGACY PATTERN MATCHING (for backward compatibility)
+    // =============================================================================
+    // Generic formType + specialty combinations
     else if (formType === "letter-medical-necessity" && specialty === "immunodeficiency") {
       googleAppsScriptUrl = process.env.GOOGLE_APPS_SCRIPT_IMMUNODEFICIENCY_LETTER
     } else if (formType === "letter-medical-necessity" && specialty === "neurodegenerative") {
       googleAppsScriptUrl = process.env.GOOGLE_APPS_SCRIPT_NEURODEGENERATIVE_LETTER
     } else if (formType === "letter-medical-necessity" && specialty === "hereditary-thyroid") {
       googleAppsScriptUrl = process.env.NEXT_PUBLIC_HEREDITARY_THYROID_LETTER_URL
-    }
-    // Medication Reconciliation Forms
-    else if (formType === "medication-reconciliation-immunodeficiency") {
-      googleAppsScriptUrl = process.env.GOOGLE_APPS_SCRIPT_IMMUNODEFICIENCY_MEDICATION_RECONCILIATION
-    } else if (formType === "medication-reconciliation-neurodegenerative") {
-      googleAppsScriptUrl = process.env.GOOGLE_APPS_SCRIPT_NEURODEGENERATIVE_MEDICATION_RECONCILIATION
-    } else if (formType === "medication-reconciliation-other-providers") {
-      // Requires GOOGLE_APPS_SCRIPT_OTHER_PROVIDERS_MEDICATION_RECONCILIATION in .env.local
-      googleAppsScriptUrl = process.env.GOOGLE_APPS_SCRIPT_OTHER_PROVIDERS_MEDICATION_RECONCILIATION
-    } else if (formType === "medication-reconciliation-hereditary-thyroid") {
-      googleAppsScriptUrl = process.env.NEXT_PUBLIC_HEREDITARY_THYROID_MEDICATION_RECONCILIATION_URL;
-    } else if (formType === "medication-reconciliation-diabetes-mody-predict") {
-      googleAppsScriptUrl = process.env.NEXT_PUBLIC_DIABETES_MODY_PREDICT_MEDICATION_RECONCILIATION_URL;
-    } else if (formType === "medication-reconciliation-cardiopulmonary-testing") {
-      googleAppsScriptUrl = process.env.NEXT_PUBLIC_CARDIOPULMONARY_TESTING_MEDICATION_RECONCILIATION_URL;
-    } else if (formType === "progress-note-hereditary-thyroid") {
-      googleAppsScriptUrl = process.env.NEXT_PUBLIC_HEREDITARY_THYROID_PROGRESS_NOTE_URL;
-    } else if (formType === "progress-note-diabetes-mody-predict") {
-      googleAppsScriptUrl = process.env.NEXT_PUBLIC_DIABETES_MODY_PREDICT_PROGRESS_NOTE_URL;
-    } else if (formType === "progress-note-cardiopulmonary-testing") {
-      googleAppsScriptUrl = process.env.NEXT_PUBLIC_CARDIOPULMONARY_TESTING_PROGRESS_NOTE_URL;
-    }
-    // Legacy pattern matching for backward compatibility
-    else if ((formType === "progress" || formType === "progress-note") && specialty === "immunodeficiency") {
+    } else if ((formType === "progress" || formType === "progress-note") && specialty === "immunodeficiency") {
       googleAppsScriptUrl = process.env.GOOGLE_APPS_SCRIPT_IMMUNODEFICIENCY_PROGRESS
     } else if ((formType === "progress" || formType === "progress-note") && specialty === "neurodegenerative") {
       googleAppsScriptUrl = process.env.GOOGLE_APPS_SCRIPT_NEURODEGENERATIVE_PROGRESS
     }
     
-  console.log("Selected Google Apps Script URL:", googleAppsScriptUrl)
+    console.log("Selected Google Apps Script URL:", googleAppsScriptUrl)
     
     if (!googleAppsScriptUrl) {
       console.error("No Google Apps Script URL found for:", formType, specialty)
+      
+      // Create helpful error message with missing environment variable name
+      const missingEnvVar = getMissingEnvironmentVariable(formType, specialty)
+      
       return withCORS(NextResponse.json({
         success: false,
         error: `No Google Apps Script configured for ${formType} (${specialty})`,
-        details: "Please check your environment variables and ensure the correct script URL is set",
-        env: process.env
+        details: `Missing environment variable: ${missingEnvVar}`,
+        suggestion: "Please add the Google Apps Script URL to your .env.local file"
       }, { status: 400 }))
     }
 
@@ -204,4 +227,89 @@ export async function POST(request: NextRequest) {
 export async function OPTIONS() {
   // Always respond with CORS headers for preflight
   return withCORS(new NextResponse(null, { status: 200 }))
+}
+
+// Helper function to identify missing environment variables
+function getMissingEnvironmentVariable(formType: string, specialty: string): string {
+  // Progress Notes
+  if (formType === "patient-progress-immunodeficiency" || (formType === "progress-note" && specialty === "immunodeficiency")) {
+    return "GOOGLE_APPS_SCRIPT_IMMUNODEFICIENCY_PROGRESS"
+  }
+  if (formType === "patient-progress-neurodegenerative" || (formType === "progress-note" && specialty === "neurodegenerative")) {
+    return "GOOGLE_APPS_SCRIPT_NEURODEGENERATIVE_PROGRESS"
+  }
+  if (formType === "patient-progress-other-providers") {
+    return "GOOGLE_APPS_SCRIPT_OTHER_PROVIDERS_PROGRESS"
+  }
+  if (formType === "progress-note-hereditary-thyroid") {
+    return "NEXT_PUBLIC_HEREDITARY_THYROID_PROGRESS_NOTE_URL"
+  }
+  if (formType === "progress-note-diabetes-mody-predict") {
+    return "NEXT_PUBLIC_DIABETES_MODY_PREDICT_PROGRESS_NOTE_URL"
+  }
+  if (formType === "progress-note-cardiopulmonary-testing") {
+    return "NEXT_PUBLIC_CARDIOPULMONARY_TESTING_PROGRESS_NOTE_URL"
+  }
+  
+  // Provider Visit Attestations
+  if (formType === "provider-visit-attestation-immunodeficiency") {
+    return "GOOGLE_APPS_SCRIPT_IMMUNODEFICIENCY_ATTESTATION"
+  }
+  if (formType === "provider-visit-attestation-neurodegenerative") {
+    return "GOOGLE_APPS_SCRIPT_NEURODEGENERATIVE_ATTESTATION"
+  }
+  if (formType === "provider-visit-attestation-other-providers") {
+    return "GOOGLE_APPS_SCRIPT_OTHER_PROVIDERS_ATTESTATION"
+  }
+  if (formType === "provider-visit-attestation-hereditary-thyroid") {
+    return "NEXT_PUBLIC_HEREDITARY_THYROID_PROVIDER_VISIT_ATTESTATION_URL"
+  }
+  if (formType === "provider-visit-attestation-diabetes-mody-predict") {
+    return "NEXT_PUBLIC_DIABETES_MODY_PREDICT_PROVIDER_VISIT_ATTESTATION_URL"
+  }
+  if (formType === "provider-visit-attestation-cardiopulmonary-testing") {
+    return "NEXT_PUBLIC_CARDIOPULMONARY_TESTING_PROVIDER_VISIT_ATTESTATION_URL"
+  }
+  
+  // Letters of Medical Necessity
+  if (formType === "letter-medical-necessity-immunodeficiency" || (formType === "letter-medical-necessity" && specialty === "immunodeficiency")) {
+    return "GOOGLE_APPS_SCRIPT_IMMUNODEFICIENCY_LETTER"
+  }
+  if (formType === "letter-medical-necessity-neurodegenerative" || (formType === "letter-medical-necessity" && specialty === "neurodegenerative")) {
+    return "GOOGLE_APPS_SCRIPT_NEURODEGENERATIVE_LETTER"
+  }
+  if (formType === "letter-medical-necessity-other-providers") {
+    return "GOOGLE_APPS_SCRIPT_OTHER_PROVIDERS_LETTER"
+  }
+  if (formType === "letter-medical-necessity-hereditary-thyroid") {
+    return "NEXT_PUBLIC_HEREDITARY_THYROID_LETTER_URL"
+  }
+  if (formType === "letter-medical-necessity-diabetes-mody-predict") {
+    return "NEXT_PUBLIC_DIABETES_MODY_PREDICT_LETTER_URL"
+  }
+  if (formType === "letter-medical-necessity-cardiopulmonary-testing") {
+    return "NEXT_PUBLIC_CARDIOPULMONARY_TESTING_LETTER_URL"
+  }
+  
+  // Medication Reconciliations
+  if (formType === "medication-reconciliation-immunodeficiency") {
+    return "GOOGLE_APPS_SCRIPT_IMMUNODEFICIENCY_MEDICATION_RECONCILIATION"
+  }
+  if (formType === "medication-reconciliation-neurodegenerative") {
+    return "GOOGLE_APPS_SCRIPT_NEURODEGENERATIVE_MEDICATION_RECONCILIATION"
+  }
+  if (formType === "medication-reconciliation-other-providers") {
+    return "GOOGLE_APPS_SCRIPT_OTHER_PROVIDERS_MEDICATION_RECONCILIATION"
+  }
+  if (formType === "medication-reconciliation-hereditary-thyroid") {
+    return "NEXT_PUBLIC_HEREDITARY_THYROID_MEDICATION_RECONCILIATION_URL"
+  }
+  if (formType === "medication-reconciliation-diabetes-mody-predict") {
+    return "NEXT_PUBLIC_DIABETES_MODY_PREDICT_MEDICATION_RECONCILIATION_URL"
+  }
+  if (formType === "medication-reconciliation-cardiopulmonary-testing") {
+    return "NEXT_PUBLIC_CARDIOPULMONARY_TESTING_MEDICATION_RECONCILIATION_URL"
+  }
+  
+  return `UNKNOWN_ENV_VAR_FOR_${formType.toUpperCase()}_${specialty?.toUpperCase() || 'UNKNOWN'}`
 }
