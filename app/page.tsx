@@ -5,187 +5,160 @@ import { Shield, Brain, FileText, ClipboardList, Pill, NotebookPen } from "lucid
 import { FormHeader } from "@/components/form-header"
 import { FormFooter } from "@/components/form-footer"
 import { appTheme } from "@/lib/theme"
+import { allForms } from "@/lib/forms-data"
 
 const categories = [
-  {
-    id: "immunodeficiency",
-    title: "Immunodeficiency",
-    description: "Forms for immunodeficiency genetic testing and treatment",
-    icon: Shield,
-    gradient: "from-blue-600 to-blue-700",
-    hoverGradient: "from-blue-700 to-blue-800",
-  },
-  {
-    id: "neurodegenerative",
-    title: "Neurodegenerative",
-    description: "Forms for neurodegenerative genetic testing and treatment",
-    icon: Brain,
-    gradient: "from-purple-600 to-purple-700",
-    hoverGradient: "from-purple-700 to-purple-800",
-  },
-  {
-    id: "hereditary-thyroid",
-    title: "Hereditary Thyroid Disorder Risk",
-    description: "Forms for hereditary thyroid disorder risk assessment and management",
-    icon: Pill,
-    gradient: "from-yellow-500 to-yellow-600",
-    hoverGradient: "from-yellow-600 to-yellow-700",
-  },
-  {
-    id: "diabetes-mody-predict",
-    title: "Diabetes MODY and Diabetes Predict",
-    description: "Forms for MODY and diabetes risk prediction and management",
-    icon: ClipboardList,
-    gradient: "from-pink-500 to-pink-600",
-    hoverGradient: "from-pink-600 to-pink-700",
-  },
-  {
-    id: "cardiopulmonary-testing",
-    title: "Combined Cardiopulmonary Testing",
-    description: "Forms for combined cardiopulmonary assessment and documentation",
-    icon: FileText,
-    gradient: "from-red-500 to-red-600",
-    hoverGradient: "from-red-600 to-red-700",
-  },
-  {
-    id: "other-providers",
-    title: "Other Providers",
-    description: "Forms for other healthcare providers and general use",
-    icon: NotebookPen, // Changed to NotebookPen for a more distinct and professional look
-    gradient: "from-green-600 to-green-700", // Updated to a unique but consistent gradient
-    hoverGradient: "from-green-700 to-green-800", // Updated hover gradient
-  },
+	{
+		id: "immunodeficiency",
+		title: "Immunodeficiency",
+		description: "Forms for immunodeficiency genetic testing and treatment",
+		icon: Shield,
+		gradient: "from-blue-600 to-blue-700",
+		hoverGradient: "from-blue-700 to-blue-800",
+	},
+	{
+		id: "neurodegenerative",
+		title: "Neurodegenerative",
+		description: "Forms for neurodegenerative genetic testing and treatment",
+		icon: Brain,
+		gradient: "from-purple-600 to-purple-700",
+		hoverGradient: "from-purple-700 to-purple-800",
+	},
+	{
+		id: "hereditary-thyroid",
+		title: "Hereditary Thyroid Disorder Risk",
+		description: "Forms for hereditary thyroid disorder risk assessment and management",
+		icon: Pill,
+		gradient: "from-yellow-500 to-yellow-600",
+		hoverGradient: "from-yellow-600 to-yellow-700",
+	},
+	{
+		id: "diabetes-mody-predict",
+		title: "Diabetes MODY and Diabetes Predict",
+		description: "Forms for MODY and diabetes risk prediction and management",
+		icon: ClipboardList,
+		gradient: "from-pink-500 to-pink-600",
+		hoverGradient: "from-pink-600 to-pink-700",
+	},
+	{
+		id: "cardiopulmonary-testing",
+		title: "Combined Cardiopulmonary Testing",
+		description: "Forms for combined cardiopulmonary assessment and documentation",
+		icon: FileText,
+		gradient: "from-red-500 to-red-600",
+		hoverGradient: "from-red-600 to-red-700",
+	},
+	{
+		id: "other-providers",
+		title: "Other Providers",
+		description: "Forms for other healthcare providers and general use",
+		icon: NotebookPen, // Changed to NotebookPen for a more distinct and professional look
+		gradient: "from-green-600 to-green-700", // Updated to a unique but consistent gradient
+		hoverGradient: "from-green-700 to-green-800", // Updated hover gradient
+	},
 ]
 
-export type FormType = {
-  title: string;
-  description: string;
-  icon: React.ElementType;
-};
-
-export const allForms: FormType[] = [
-  {
-    title: "Letter of Medical Necessity",
-    description: "Medical necessity documentation for treatments",
-    icon: FileText,
-  },
-  {
-    title: "Provider Visit Attestation",
-    description: "Provider visit documentation and attestation",
-    icon: ClipboardList,
-  },
-  {
-    title: "Medication Reconciliation",
-    description: "Comprehensive medication reconciliation form",
-    icon: Pill,
-  },
-  {
-    title: "Progress Note",
-    description: "Patient progress assessment and documentation",
-    icon: NotebookPen,
-  },
-];
-
 export default function HomePage() {
-  return (
-    <div className={`${appTheme.layout.pageContainer} bg-gradient-to-br from-slate-50 to-blue-50`}>
-      <FormHeader />
+	return (
+		<div className={`${appTheme.layout.pageContainer} bg-gradient-to-br from-slate-50 to-blue-50`}>
+			<FormHeader />
 
-      <div className={`${appTheme.layout.contentContainer} py-8`}>
-        {/* Hero Section */}
-        <div className="text-center mb-12">
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-            Medical Forms Management
-          </h1>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Streamlined digital forms for genetic testing documentation, provider attestations, and patient care management
-          </p>
-        </div>
+			<div className={`${appTheme.layout.contentContainer} py-8`}>
+				{/* Hero Section */}
+				<div className="text-center mb-12">
+					<h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+						Medical Forms Management
+					</h1>
+					<p className="text-xl text-gray-600 max-w-2xl mx-auto">
+						Streamlined digital forms for genetic testing documentation, provider attestations, and patient care management
+					</p>
+				</div>
 
-        {/* Categories */}
-        <div className="grid md:grid-cols-2 gap-6 mb-12">
-          {categories.map((category) => {
-            const Icon = category.icon
-            return (
-              <Link key={category.id} href={`/${category.id}`}>
-                <Card className={`${appTheme.navigation.card} group transition-all duration-300 hover:shadow-xl hover:scale-105`}>
-                  <CardHeader className={`bg-gradient-to-r ${category.gradient} group-hover:bg-gradient-to-r group-hover:${category.hoverGradient} text-white rounded-t-lg transition-all duration-300`}>
-                    <div className="flex items-center space-x-4">
-                      <Icon className="h-8 w-8" />
-                      <div>
-                        <CardTitle className="text-xl font-bold">{category.title}</CardTitle>
-                        <CardDescription className="text-white/90">
-                          {category.description}
-                        </CardDescription>
-                      </div>
-                    </div>
-                  </CardHeader>
-                  <CardContent className="p-6">
-                    <div className="space-y-2">
-                      {allForms.map((form, index) => {
-                        const FormIcon = form.icon
-                        return (
-                          <div key={index} className="flex items-center space-x-2 text-sm text-gray-600">
-                            <FormIcon className="h-4 w-4" />
-                            <span>{form.title}</span>
-                          </div>
-                        )
-                      })}
-                    </div>
-                  </CardContent>
-                </Card>
-              </Link>
-            )
-          })}
-        </div>
+				{/* Categories */}
+				<div className="grid md:grid-cols-2 gap-6 mb-12">
+					{categories.map((category) => {
+						const Icon = category.icon
+						return (
+							<Link key={category.id} href={`/${category.id}`}>
+								<Card className={`${appTheme.navigation.card} group transition-all duration-300 hover:shadow-xl hover:scale-105`}>
+									<CardHeader className={`bg-gradient-to-r ${category.gradient} group-hover:bg-gradient-to-r group-hover:${category.hoverGradient} text-white rounded-t-lg transition-all duration-300`}>
+										<div className="flex items-center space-x-4">
+											<Icon className="h-8 w-8" />
+											<div>
+												<CardTitle className="text-xl font-bold">{category.title}</CardTitle>
+												<CardDescription className="text-white/90">
+													{category.description}
+												</CardDescription>
+											</div>
+										</div>
+									</CardHeader>
+									<CardContent className="p-6">
+										<div className="space-y-2">
+											{allForms.map((form, index) => {
+												const FormIcon = form.icon
+												return (
+													<div key={index} className="flex items-center space-x-2 text-sm text-gray-600">
+														<FormIcon className="h-4 w-4" />
+														<span>{form.title}</span>
+													</div>
+												)
+											})}
+										</div>
+									</CardContent>
+								</Card>
+							</Link>
+						)
+					})}
+				</div>
 
-        {/* Features Section */}
-        <div className="grid md:grid-cols-3 gap-6 mb-12">
-          <Card className={appTheme.navigation.card}>
-            <CardHeader>
-              <CardTitle className="flex items-center space-x-2">
-                <FileText className="h-5 w-5 text-blue-600" />
-                <span>Digital Forms</span>
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-gray-600">
-                Digitized medical forms with automatic PDF generation and Google Drive integration
-              </p>
-            </CardContent>
-          </Card>
+				{/* Features Section */}
+				<div className="grid md:grid-cols-3 gap-6 mb-12">
+					<Card className={appTheme.navigation.card}>
+						<CardHeader>
+							<CardTitle className="flex items-center space-x-2">
+								<FileText className="h-5 w-5 text-blue-600" />
+								<span>Digital Forms</span>
+							</CardTitle>
+						</CardHeader>
+						<CardContent>
+							<p className="text-gray-600">
+								Digitized medical forms with automatic PDF generation and Google Drive integration
+							</p>
+						</CardContent>
+					</Card>
 
-          <Card className={appTheme.navigation.card}>
-            <CardHeader>
-              <CardTitle className="flex items-center space-x-2">
-                <Shield className="h-5 w-5 text-green-600" />
-                <span>Secure Storage</span>
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-gray-600">
-                Secure cloud storage with automated backup and document management
-              </p>
-            </CardContent>
-          </Card>
+					<Card className={appTheme.navigation.card}>
+						<CardHeader>
+							<CardTitle className="flex items-center space-x-2">
+								<Shield className="h-5 w-5 text-green-600" />
+								<span>Secure Storage</span>
+							</CardTitle>
+						</CardHeader>
+						<CardContent>
+							<p className="text-gray-600">
+								Secure cloud storage with automated backup and document management
+							</p>
+						</CardContent>
+					</Card>
 
-          <Card className={appTheme.navigation.card}>
-            <CardHeader>
-              <CardTitle className="flex items-center space-x-2">
-                <Brain className="h-5 w-5 text-purple-600" />
-                <span>Smart Workflow</span>
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-gray-600">
-                Streamlined workflows for genetic testing documentation and patient care
-              </p>
-            </CardContent>
-          </Card>
-        </div>
-      </div>
+					<Card className={appTheme.navigation.card}>
+						<CardHeader>
+							<CardTitle className="flex items-center space-x-2">
+								<Brain className="h-5 w-5 text-purple-600" />
+								<span>Smart Workflow</span>
+							</CardTitle>
+						</CardHeader>
+						<CardContent>
+							<p className="text-gray-600">
+								Streamlined workflows for genetic testing documentation and patient care
+							</p>
+						</CardContent>
+					</Card>
+				</div>
+			</div>
 
-      <FormFooter />
-    </div>
-  )
+			<FormFooter />
+		</div>
+	)
 }
+        
