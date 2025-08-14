@@ -68,9 +68,3 @@
     "typescript": "^5"
   }
 }
-    "react-day-picker": {
-      "react": "$react",
-      "react-dom": "$react-dom"
-    }
-  }
-}
