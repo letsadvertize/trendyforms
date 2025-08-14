@@ -27,13 +27,17 @@ const formComponents: Record<string, React.ComponentType> = {
 }
 
 
-export default async function HereditaryThyroidFormPage({ params }: { params: { form: string } }) {
-  const { form } = params
-  const formTitle = formTitles[form]
-  const FormComponent = formComponents[form]
+interface HereditaryThyroidFormPageProps {
+  params: { form: string }
+}
+
+export default async function HereditaryThyroidFormPage({ params }: HereditaryThyroidFormPageProps) {
+  const { form } = params;
+  const formTitle = formTitles[form];
+  const FormComponent = formComponents[form];
 
   if (!formTitle) {
-    notFound()
+    notFound();
   }
 
   return (
@@ -59,5 +63,5 @@ export default async function HereditaryThyroidFormPage({ params }: { params: { 
         </div>
       </div>
     </div>
-  )
+  );
 }
